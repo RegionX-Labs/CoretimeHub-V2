@@ -10,13 +10,17 @@ import AccountSelector from "@/components/AccountSelector";
 import { Button } from "@region-x/components";
 import { burnInfoRequested } from "@/coretime/burnInfo";
 import { purchaseHistoryRequested } from "@/coretime/purchaseHistory";
+import { useUnit } from "effector-react";
+import { $theme, Theme, themeToggled } from "@/theme";
 
 export default function Home() {
   const router = useRouter();
   const { network } = router.query;
+  const theme = useUnit($theme);
 
   useEffect(() => {
     let _network = Network.NONE;
+
     if (!router.isReady) return;
     if (network === 'polkadot') _network = Network.POLKADOT;
     else if (network === 'kusama') _network = Network.KUSAMA;
@@ -43,6 +47,14 @@ export default function Home() {
     purchaseHistoryRequested({network: _network, saleCycle: 1});
   }, [network, router, router.isReady]);
 
+  useEffect(() => {
+    if(theme === Theme.Dark) {
+      document.documentElement.setAttribute("data-theme", 'dark');
+    }else {
+      document.documentElement.setAttribute("data-theme", 'light');
+    }
+  }, [theme]);
+
   return (
     <div className={styles.page}>
       <h1 className={styles.title}>
@@ -53,6 +65,9 @@ export default function Home() {
       <AccountSelector />
       <Button color="redDark" onClick={() => console.log('works')}>
         Test Button
+      </Button>
+      <Button onClick={() => themeToggled()}>
+        {theme === Theme.Dark ? "🌙 Dark Mode" : "☀️ Light Mode"}
       </Button>
     </div>
   );

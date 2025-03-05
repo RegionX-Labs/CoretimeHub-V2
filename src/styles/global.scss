@@ -3,4 +3,11 @@
 
 body {
   font-family: Montserrat;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+[data-theme="dark"] {
+  --background-color: #{$dark};
+  --text-color: #ffffff;
 }

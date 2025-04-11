@@ -1,0 +1,93 @@
+@use '@/styles/variables' as *;
+@use '@/styles/mixins' as *;
+@use 'sass:color';
+
+.metricBox {
+  margin-bottom: 24px;
+  background: $darkBackground3;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid color.adjust($darkBackground2, $lightness: 10%);
+
+  h3 {
+    font-size: 1.5rem;
+    margin: 4px 0;
+    color: $white;
+  }
+
+  .metricLabel {
+    color: $gray6;
+    font-weight: 500;
+  }
+
+  .gain {
+    color: $greenPrimary;
+    font-size: 0.9rem;
+    margin-top: 6px;
+  }
+}
+
+.coretimeValue {
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 8px 0;
+  color: $white;
+}
+
+.gain {
+  font-size: 0.875rem;
+  color: $gray6;
+}
+
+.gainAmount {
+  color: $greenPrimary;
+}
+
+.splitCards {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.splitCard {
+  background-color: $darkBackground1;
+  border-radius: 10px;
+  padding: 10px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid color.adjust($darkBackground2, $lightness: 10%);
+}
+
+.splitLabel {
+  font-weight: 600;
+  color: $white;
+}
+
+.splitDetails {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+
+  span {
+    font-size: 0.95rem;
+  }
+}
+
+.positive {
+  color: $greenDark;
+  background-color: rgba($greenDark, 0.1);
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+}
+
+.negative {
+  color: $redDark;
+  background-color: rgba($redDark, 0.1);
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+}

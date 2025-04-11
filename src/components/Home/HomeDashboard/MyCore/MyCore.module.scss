@@ -1,0 +1,76 @@
+@use '@/styles/variables' as *;
+@use 'sass:color';
+
+.myCoreCard {
+  background: $darkBackground2;
+  border-radius: 15px;
+  padding: 30px;
+  color: $white;
+  width: 280px;
+  margin-top: 100px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border: 1px solid color.adjust($darkBackground2, $lightness: 10%);
+}
+
+.title {
+  font-size: 0.875rem;
+  color: $gray6;
+  margin-bottom: -10px;
+}
+
+.selectBox {
+  background-color: $darkBackground1;
+  border-radius: 10px;
+  padding: 2px 2px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.arrowIcon {
+  width: 16px;
+  height: 16px;
+  fill: $white;
+}
+
+.details {
+  display: flex;
+  justify-content: space-between;
+}
+
+.detailBlock {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-size: 0.75rem;
+  color: $gray6;
+  margin-bottom: 4px;
+}
+
+.value {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.renewButton {
+  background-color: $greenPrimary;
+  color: $darkBackground2;
+  padding: 10px 0;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: color.adjust($greenPrimary, $lightness: -5%);
+  }
+}

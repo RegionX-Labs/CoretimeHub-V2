@@ -3,10 +3,10 @@ import { getNetworkCoretimeIndexer } from '@/network';
 import { Network } from '@/types';
 import { createEffect, createEvent, createStore, sample } from 'effector';
 
-type HistoryRequestPayload = { network: Network; saleCycle: number };
-export const purchaseHistoryRequested = createEvent<HistoryRequestPayload>();
+export const purchaseHistoryRequested = createEvent<{ network: Network; saleCycle: number }>();
 
-export const $purchaseHistory = createStore<PurchaseHistory>([]);
+export const $purchaseHistory = createStore<PurchaseHistoryItem[]>([]);
+export const $totalPurchases = createStore<number>(0);
 
 export enum PurchaseType {
   BULK = 'bulk',
@@ -22,7 +22,10 @@ export type PurchaseHistoryItem = {
   type: PurchaseType;
 };
 
-type PurchaseHistory = PurchaseHistoryItem[];
+export type PurchaseHistoryResult = {
+  items: PurchaseHistoryItem[];
+  totalCount: number;
+};
 
 const fetchPurchaseHistory = async (
   network: Network,
@@ -43,10 +46,6 @@ const fetchPurchaseHistory = async (
         purchaseType
         timestamp
       }
-      pageInfo {
-        hasNextPage
-        endCursor
-      }
       totalCount
     }
   }`;
@@ -54,12 +53,12 @@ const fetchPurchaseHistory = async (
 };
 
 const getPurchaseHistoryFx = createEffect(
-  async (payload: HistoryRequestPayload): Promise<PurchaseHistory> => {
+  async (payload: { network: Network; saleCycle: number }): Promise<PurchaseHistoryResult> => {
     const res: ApiResponse = await fetchPurchaseHistory(payload.network, payload.saleCycle);
     const { status, data } = res;
-    if (status !== 200) return [];
+    if (status !== 200) return { items: [], totalCount: 0 };
 
-    const history = (data.purchases.nodes as Array<any>).map(
+    const items = (data.purchases.nodes as Array<any>).map(
       ({ account, core, extrinsicId, height, price, purchaseType, timestamp }) =>
         ({
           address: account,
@@ -71,7 +70,10 @@ const getPurchaseHistoryFx = createEffect(
         }) as PurchaseHistoryItem
     );
 
-    return history;
+    return {
+      items,
+      totalCount: data.purchases.totalCount,
+    };
   }
 );
 
@@ -82,5 +84,12 @@ sample({
 
 sample({
   clock: getPurchaseHistoryFx.doneData,
+  fn: ({ items }) => items,
   target: $purchaseHistory,
+});
+
+sample({
+  clock: getPurchaseHistoryFx.doneData,
+  fn: ({ totalCount }) => totalCount,
+  target: $totalPurchases,
 });

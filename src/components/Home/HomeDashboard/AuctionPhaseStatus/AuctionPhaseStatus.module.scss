@@ -1,0 +1,54 @@
+@use '@/styles/variables' as *;
+@use '@/styles/_mixins' as *;
+
+.auctionPhaseCard {
+  background: $darkBackground2;
+  border-radius: 15px;
+  padding: 30px;
+  color: $white;
+  width: 380px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  @include Inter;
+  margin-bottom: 60px;
+}
+
+.header {
+  font-size: 1rem;
+  color: $gray6;
+  font-weight: 600;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-right: 20px;
+}
+
+.progressWrapper {
+  width: 240px;
+  height: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.label {
+  font-size: 0.85rem;
+  color: $dark5;
+}
+
+.value {
+  white-space: nowrap;
+  font-size: 1rem;
+  font-weight: 600;
+}

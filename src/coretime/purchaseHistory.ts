@@ -10,7 +10,7 @@ export const $totalPurchases = createStore<number>(0);
 
 export enum PurchaseType {
   BULK = 'bulk',
-  RENEWAL = 'renewal',
+  RENEWAL = 'renewal'
 }
 
 export type PurchaseHistoryItem = {

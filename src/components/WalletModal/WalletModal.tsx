@@ -38,7 +38,7 @@ const WalletModal: React.FC<WalletModalProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   const handleWalletClick = (walletId: string, isAvailable: boolean, url: string) => {
-    if (isAvailable) {
+    if (isAvailable || walletId === 'nova') {
       walletSelected(walletId);
       localStorage.setItem(SELECTED_WALLET_KEY, walletId);
       onClose();
